@@ -1,3 +1,5 @@
+package com.example.quanlichitieu.data.local.entity;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 

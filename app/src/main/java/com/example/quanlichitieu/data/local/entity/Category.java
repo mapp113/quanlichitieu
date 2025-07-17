@@ -1,5 +1,11 @@
 package com.example.quanlichitieu.data.local.entity;
 
-public  enum Category {
-    FOOD,SALARY,ENTERTAINMENT,TRANSPORT, INVESTMENT
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
+public class Category {
+    @PrimaryKey(autoGenerate = true)
+    private int id;
+    private String name;
 }
