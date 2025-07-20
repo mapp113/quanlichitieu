@@ -6,74 +6,78 @@
     android:background="?attr/colorSurface"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         app:navigationIcon="@drawable/arrow_back_24px"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:title="Công cụ"/>
+        app:navigationIconTint="?attr/colorOnPrimary"
+        app:title="Công cụ"
+        app:titleTextColor="?attr/colorOnPrimary"
+        app:popupTheme="@style/ThemeOverlay.Material3.Light" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp">
+        android:padding="10dp">
 
-        <LinearLayout
-            android:id="@+id/llCurrencyConverter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="icon chuyển đổi ngoại tệ"
-                android:src="@drawable/attach_money_24px"
-                app:tint="?attr/colorControlNormal" />
-
-            <TextView
-                android:id="@+id/tvCurrencyConverter"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="16dp"
-                android:text="Chuyển đổi ngoại tệ"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true">
 
-        <LinearLayout
-            android:id="@+id/llCalculator"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:clickable="true"
-            android:focusable="true"
-            android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="icon chuyển đổi ngoại tệ"
+                    android:src="@drawable/attach_money_24px"
+                    app:tint="?attr/colorOnSurfaceVariant" />
 
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="icon máy tính"
-                android:src="@drawable/calculate_24px"
-                app:tint="?attr/colorControlNormal" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvCurrencyConverter"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Chuyển đổi ngoại tệ"
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorOnSurface" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvCalculator"
-                android:layout_width="0dp"
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="16dp"
-                android:text="Máy tính"
-                android:textSize="18sp" />
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="icon máy tính"
+                    android:src="@drawable/calculate_24px"
+                    app:tint="?attr/colorOnSurfaceVariant" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/tvCalculator"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="Máy tính"
+                    android:textSize="18sp"
+                    android:textColor="?attr/colorOnSurface" />
+            </LinearLayout>
     </LinearLayout>
 </LinearLayout>
