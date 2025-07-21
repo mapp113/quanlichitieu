@@ -92,8 +92,8 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
-                android:contentDescription="icon máy tính"
-                android:src="@drawable/calculate_24px"
+                android:contentDescription="icon mua sắm"
+                android:src="@drawable/list_alt_check_24px"
                 app:tint="?attr/colorOnSurfaceVariant" />
 
             <com.google.android.material.textview.MaterialTextView
