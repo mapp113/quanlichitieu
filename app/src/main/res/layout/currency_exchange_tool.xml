@@ -62,6 +62,7 @@
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/swap_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -89,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
                 android:digits="0123456789."
-                android:maxLength="12" />
+                android:maxLength="12"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Select -->
