@@ -11,10 +11,12 @@ import android.text.TextWatcher;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.quanlichitieu.R;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class CurrencyConverterActivity extends AppCompatActivity{
     private TextInputEditText amountInput1, amountInput2;
@@ -34,6 +36,7 @@ public class CurrencyConverterActivity extends AppCompatActivity{
         currencyPicker1 = findViewById(R.id.currency_picker1);
         currencyPicker2 = findViewById(R.id.currency_picker2);
         swapButton = findViewById(R.id.swap_icon);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
 
         // Gắn dropdown cho mỗi TextView
         setupCurrencyPicker(currencyPicker1);
@@ -69,6 +72,7 @@ public class CurrencyConverterActivity extends AppCompatActivity{
 
             performConversion(); // cập nhật lại kết quả sau khi đổi đơn vị
         });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
     }
 
@@ -120,7 +124,7 @@ public class CurrencyConverterActivity extends AppCompatActivity{
 
         double converted = inputAmount * rate;
 
-        amountInput2.setText(String.format("%.2f", converted));
+        amountInput2.setText(String.format(Locale.ENGLISH,"%.2f", converted));
     }
 
     private double getExchangeRate(String from, String to) {
