@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quanlichitieu">
         <activity
+            android:name=".ui.activity.TransactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.AddEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
