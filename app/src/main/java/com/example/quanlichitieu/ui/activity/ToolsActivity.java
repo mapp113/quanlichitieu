@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.quanlichitieu.R;
 import android.content.Intent;
 import android.view.View;
+
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textview.MaterialTextView;
 
 public class ToolsActivity  extends AppCompatActivity {
@@ -15,6 +17,9 @@ public class ToolsActivity  extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tools);
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         tvCurrencyConverter = findViewById(R.id.tvCurrencyConverter);
         tvCalculator = findViewById(R.id.tvCalculator);
