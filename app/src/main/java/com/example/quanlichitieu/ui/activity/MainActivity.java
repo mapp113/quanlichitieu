@@ -1,9 +1,13 @@
 package com.example.quanlichitieu.ui.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,6 +25,21 @@ public class MainActivity extends AppCompatActivity {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
+        });
+        SharedPreferences prefs = getSharedPreferences("settings", MODE_PRIVATE);
+        int savedMode = prefs.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        AppCompatDelegate.setDefaultNightMode(savedMode);
+
+        TextView settingsRedirect = findViewById(R.id.settingsRedirect);
+        TextView toolsRedirect = findViewById(R.id.toolsRedirect);
+
+        settingsRedirect.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
+        });
+        toolsRedirect.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ToolsActivity.class);
+            startActivity(intent);
         });
     }
 }
