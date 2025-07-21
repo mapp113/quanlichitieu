@@ -4,14 +4,12 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.quanlichitieu.R;
 import android.content.Intent;
-import android.view.View;
+import android.widget.LinearLayout;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textview.MaterialTextView;
 
 public class ToolsActivity  extends AppCompatActivity {
-    private MaterialTextView tvCurrencyConverter;
-    private MaterialTextView tvCalculator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +19,8 @@ public class ToolsActivity  extends AppCompatActivity {
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setNavigationOnClickListener(v -> finish());
 
-        tvCurrencyConverter = findViewById(R.id.tvCurrencyConverter);
-        tvCalculator = findViewById(R.id.tvCalculator);
+        LinearLayout tvCurrencyConverter = findViewById(R.id.tvCurrencyConverter);
+        LinearLayout tvCalculator = findViewById(R.id.tvCalculator);
 
         // Chuyển sang màn hình chuyển đổi ngoại tệ
         tvCurrencyConverter.setOnClickListener(v -> {
