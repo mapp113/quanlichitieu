@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mục tiêu tiết kiệm"
+            android:textSize="16sp"
+            android:layout_marginTop="8dp"/>
+
+        <EditText
+            android:id="@+id/editGoalTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Mục tiêu của bạn"
+            android:inputType="text" />
+
+        <!-- Số tiền cần đạt -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số tiền cần đạt được (VND)"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/editTargetAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số tiền cần thiết"
+            android:inputType="numberDecimal" />
+
+        <!-- Số tiền hiện có -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Số tiền hiện có (VND)"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/editCurrentAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số tiền hiện có"
+            android:inputType="numberDecimal" />
+
+        <!-- Hạn chót -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thời hạn"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <DatePicker
+            android:id="@+id/datePickerDeadline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="true"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Nút Tạo mục tiêu -->
+        <Button
+            android:id="@+id/btnCreateGoal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tạo mục tiêu"
+            android:layout_marginTop="24dp" />
+    </LinearLayout>
+</ScrollView>
