@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlichitieu.R;
 import com.example.quanlichitieu.data.local.entity.Transaction;
+import com.example.quanlichitieu.data.local.entity.Type;
 
 import java.util.List;
 
@@ -53,8 +54,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(@NonNull TransactionAdapter.ViewHolder holder, int position) {
         Transaction transaction = items.get(position);
         holder.tvTitle.setText(transaction.title);
-        holder.tvAmount.setText((transaction.type != null && transaction.type.name().equals("INCOME") ? "+" : "-") + transaction.amount);
-        holder.tvAmount.setTextColor(transaction.type != null && transaction.type.name().equals("INCOME") ? 0xFF4CAF50 : 0xFFF44336);
+        holder.tvAmount.setText((transaction.type != null && transaction.type == Type.INCOME ? "+" : "-") + transaction.amount);
+        holder.tvAmount.setTextColor(transaction.type != null && transaction.type == Type.INCOME ? 0xFF4CAF50 : 0xFFF44336);
         holder.tvDate.setText(transaction.date);
 //        holder.tvCategory.setText(String.valueOf(transaction.category));
         holder.tvAddress.setText(String.valueOf(transaction.address));
