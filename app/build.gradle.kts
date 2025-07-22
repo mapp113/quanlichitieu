@@ -33,7 +33,8 @@ android {
 
 dependencies {
     implementation(libs.mpandroidchart)
-    implementation(libs.recyclerview.v7)
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation("androidx.recyclerview:recyclerview-selection:1.2.0")
     implementation(libs.room.runtime)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
@@ -48,4 +49,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    configurations.all {
+        exclude(group = "com.intellij", module = "annotations")
+    }
 }
