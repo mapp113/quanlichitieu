@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Quanlichitieu">
         <activity
             android:name=".ui.activity.AddCategoryActivity"
+
+            android:name=".ui.activity.ShoppingListActivity"
+
             android:exported="false" />
         <activity
             android:name=".ui.activity.TransactionRealActivity"
@@ -48,7 +51,6 @@
         <activity android:name=".ui.activity.CurrencyConverterActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.ToolsActivity" />
-
     </application>
 
 </manifest>
