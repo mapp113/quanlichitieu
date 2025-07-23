@@ -52,4 +52,5 @@ public class Transaction {
         this.categoryId = categoryId;
         this.userOwnerId = userOwnerId;
     }
+
 }

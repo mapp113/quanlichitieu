@@ -131,7 +131,7 @@ public class AddEditActivity extends AppCompatActivity {
         String address = etAddress.getText().toString().trim();
         // int userOwnerId = 0;
         // try { userOwnerId = Integer.parseInt(etUserOwnerId.getText().toString().trim()); } catch (Exception ignored) {}
-        Transaction transaction = new Transaction(desc, amount, type, date, address.hashCode());
+        Transaction transaction = new Transaction(desc, amount, type, date, address.hashCode(),1,1);
         if (transactionId == -1) {
             transactionViewModel.insert(transaction);
         } else {
