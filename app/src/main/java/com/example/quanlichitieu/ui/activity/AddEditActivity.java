@@ -31,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import java.util.ArrayList;
 import android.view.View;
+import java.text.ParseException;
 
 public class AddEditActivity extends AppCompatActivity {
 
@@ -118,11 +119,16 @@ public class AddEditActivity extends AppCompatActivity {
         if (transaction == null) return;
         etAmount.setText(String.valueOf(transaction.amount));
         etDesc.setText(transaction.title);
-        etDate.setText(transaction.date != null ? transaction.date : "");
+        // Format lại ngày khi hiển thị
+        try {
+            Date parsed = new SimpleDateFormat("dd/MM/yyyy").parse(transaction.date);
+            etDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(parsed));
+        } catch (Exception e) {
+            etDate.setText(transaction.date != null ? transaction.date : "");
+        }
         if (transaction.type == Type.INCOME) rbIncome.setChecked(true);
         else rbExpense.setChecked(true);
         etAddress.setText("");
-        // set category spinner selection
         if (categoryList != null) {
             for (int i = 0; i < categoryList.size(); i++) {
                 if (categoryList.get(i).getId() == transaction.categoryId) {
@@ -144,9 +150,18 @@ public class AddEditActivity extends AppCompatActivity {
         double amount = Double.parseDouble(amountStr);
         String date;
         if (transactionId == -1) {
-            date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
         } else {
-            date = dateStr.isEmpty() ? new SimpleDateFormat("yyyy-MM-dd").format(new Date()) : dateStr;
+            if (dateStr.isEmpty()) {
+                date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+            } else {
+                try {
+                    Date parsed = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
+                    date = new SimpleDateFormat("dd/MM/yyyy").format(parsed);
+                } catch (ParseException e) {
+                    date = dateStr;
+                }
+            }
         }
         Type type = rbIncome.isChecked() ? Type.INCOME : Type.EXPENSE;
         String address = etAddress.getText().toString().trim();
