@@ -1,4 +1,7 @@
 package com.example.quanlichitieu.data.local.dao;
 
-public class UserDao {
+import androidx.room.Dao;
+
+@Dao
+public interface UserDao {
 }

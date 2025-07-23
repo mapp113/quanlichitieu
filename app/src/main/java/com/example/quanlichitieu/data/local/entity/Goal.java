@@ -5,7 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-import com.google.firebase.firestore.auth.User;
+
 
 @Entity(tableName = "goals",
         foreignKeys = @ForeignKey(
