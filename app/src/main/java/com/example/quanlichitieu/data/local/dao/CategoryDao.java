@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.example.quanlichitieu.data.local.entity.Category;
 
@@ -14,10 +15,17 @@ import java.util.List;
 public interface CategoryDao {
     @Insert
     void insert(Category category);
+
+    @Update
+    void update(Category category);
+
     @Delete
     void delete(Category category);
-    @Query("select * from category")
-    LiveData<List<Category>> categoryList();
-    @Query("select * from category where id=:id limit 1")
+
+    @Query("SELECT * FROM category ORDER BY id ASC")
+    LiveData<List<Category>> getAll();
+
+    @Query("SELECT * FROM category WHERE id = :id LIMIT 1")
     LiveData<Category> findById(int id);
 }
+

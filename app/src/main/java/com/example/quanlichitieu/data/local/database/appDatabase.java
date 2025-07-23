@@ -9,16 +9,18 @@ import androidx.room.TypeConverters;
 
 import com.example.quanlichitieu.data.local.dao.CategoryDao;
 import com.example.quanlichitieu.data.local.dao.TransactionDao;
+import com.example.quanlichitieu.data.local.dao.UserDao;
 import com.example.quanlichitieu.data.local.entity.Category;
 import com.example.quanlichitieu.data.local.entity.Transaction;
 import com.example.quanlichitieu.data.local.entity.User;
 import com.example.quanlichitieu.data.local.entity.Converters;
 
-@Database(entities = {Transaction.class, Category.class}, version = 5, exportSchema = false)
+@Database(entities = {Transaction.class, Category.class,User.class}, version = 5, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class appDatabase extends RoomDatabase {
     private static appDatabase instance;
     public abstract CategoryDao categoryDao();
+    public abstract UserDao userDao();
     public abstract TransactionDao transactionDao();
 
     public static synchronized appDatabase getInstance(Context context) {
