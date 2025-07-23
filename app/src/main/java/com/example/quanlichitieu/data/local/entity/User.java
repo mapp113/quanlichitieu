@@ -13,12 +13,15 @@ public class User {
     public String fullName;
     public String email;
     public long createdAt;
+    public String salt;
 
-    public User(String username, String password, String fullName, String email, long createdAt) {
+    public User(String username, String password, String fullName, String email, long createdAt, String salt) {
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.email = email;
         this.createdAt = createdAt;
+        this.salt = salt;
     }
+
 }

@@ -17,7 +17,6 @@ import com.example.quanlichitieu.data.local.entity.Transaction;
 import com.example.quanlichitieu.data.local.entity.User;
 import com.example.quanlichitieu.data.local.entity.Converters;
 
-
 @Database(entities = {Transaction.class, Category.class, User.class, Goal.class}, version = 5, exportSchema = false)
 
 @TypeConverters(Converters.class)
@@ -29,6 +28,7 @@ public abstract class appDatabase extends RoomDatabase {
     public abstract GoalDAO goalDAO();
 
     public static synchronized appDatabase getInstance(Context context) {
+
         if (instance == null) {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             appDatabase.class, "app_db")
