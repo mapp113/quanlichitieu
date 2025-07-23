@@ -31,6 +31,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import java.util.ArrayList;
 import android.view.View;
+import java.text.ParseException;
 
 public class AddEditActivity extends AppCompatActivity {
 
@@ -118,11 +119,16 @@ public class AddEditActivity extends AppCompatActivity {
         if (transaction == null) return;
         etAmount.setText(String.valueOf(transaction.amount));
         etDesc.setText(transaction.title);
-        etDate.setText(transaction.date != null ? transaction.date : "");
+        // Format lại ngày khi hiển thị
+        try {
+            String dateStr = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date(transaction.date));
+            etDate.setText(dateStr);
+        } catch (Exception e) {
+            etDate.setText("");
+        }
         if (transaction.type == Type.INCOME) rbIncome.setChecked(true);
         else rbExpense.setChecked(true);
         etAddress.setText("");
-        // set category spinner selection
         if (categoryList != null) {
             for (int i = 0; i < categoryList.size(); i++) {
                 if (categoryList.get(i).getId() == transaction.categoryId) {
@@ -137,23 +143,23 @@ public class AddEditActivity extends AppCompatActivity {
         String amountStr = etAmount.getText().toString().trim();
         String desc = etDesc.getText().toString().trim();
         String dateStr = etDate.getText().toString().trim();
+        long dateMillis = 0;
+        try {
+            dateMillis = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(dateStr).getTime();
+        } catch (Exception e) {
+            dateMillis = System.currentTimeMillis();
+        }
         if (amountStr.isEmpty() || desc.isEmpty() || rgType.getCheckedRadioButtonId() == -1 || selectedCategoryId == -1) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
         double amount = Double.parseDouble(amountStr);
-        String date;
-        if (transactionId == -1) {
-            date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-        } else {
-            date = dateStr.isEmpty() ? new SimpleDateFormat("yyyy-MM-dd").format(new Date()) : dateStr;
-        }
-        Type type = rbIncome.isChecked() ? Type.INCOME : Type.EXPENSE;
         String address = etAddress.getText().toString().trim();
         int userOwnerId = 1; // TODO: Lấy userId thực tế từ session/login
-        saveTransactionWithCategoryId(desc, amount, type, date, address, selectedCategoryId, userOwnerId);
+        Type type = rbIncome.isChecked() ? Type.INCOME : Type.EXPENSE;
+        saveTransactionWithCategoryId(desc, amount, type, dateMillis, address, selectedCategoryId, userOwnerId);
     }
-    private void saveTransactionWithCategoryId(String desc, double amount, Type type, String date, String address, int categoryId, int userOwnerId) {
+    private void saveTransactionWithCategoryId(String desc, double amount, Type type, long date, String address, int categoryId, int userOwnerId) {
         String addressToSave = (selectedLat != 0 && selectedLng != 0) ? (selectedLat + "," + selectedLng) : address;
         Transaction transaction = new Transaction(desc, amount, type, date, addressToSave, categoryId, userOwnerId);
         if (transactionId == -1) {

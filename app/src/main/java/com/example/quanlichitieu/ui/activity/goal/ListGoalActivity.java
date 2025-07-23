@@ -2,9 +2,16 @@ package com.example.quanlichitieu.ui.activity.goal;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlichitieu.R;
 import com.example.quanlichitieu.data.local.entity.Goal;
+import com.example.quanlichitieu.data.local.utils.MenuHandler;
 import com.example.quanlichitieu.ui.adapter.GoalAdapter;
 import com.example.quanlichitieu.viewmodel.GoalViewModel;
 
@@ -28,7 +36,17 @@ public class ListGoalActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.goal_list_goal);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
 
         recyclerView = findViewById(R.id.GoalList);
         btnCurrent = findViewById(R.id.btnFilterCurrent);
@@ -62,5 +80,19 @@ public class ListGoalActivity extends AppCompatActivity {
         goalsLiveData.observe(this, goals -> {
             adapter.setGoals(goals); // Bạn cần có phương thức setGoals mới trong Adapter
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (MenuHandler.handleMenuClick(this, item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

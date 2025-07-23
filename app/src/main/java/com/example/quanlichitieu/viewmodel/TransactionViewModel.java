@@ -51,11 +51,11 @@ public class TransactionViewModel extends AndroidViewModel {
     public LiveData<Double> getTotalExpense() {
         return repository.getTotalExpense();
     }
-    public LiveData<List<CategorySummary>> getCategorySummariesByMonth(String type, String month) {
-        return repository.getCategorySummariesByMonth(type, month);
+    public LiveData<List<CategorySummary>> getCategorySummariesByMonth(String type, long monthMillis) {
+        return repository.getCategorySummariesByMonth(type, monthMillis);
     }
 
-    public LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, String day) {
-        return repository.getCategorySummariesByDay(type, day);
+    public LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, long dayMillis) {
+        return repository.getCategorySummariesByDay(type, dayMillis);
     }
 }
