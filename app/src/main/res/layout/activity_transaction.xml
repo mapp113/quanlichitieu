@@ -75,4 +75,11 @@
         app:srcCompat="@android:drawable/ic_input_add"
         app:backgroundTint="#2196F3"
         app:tint="#fff"/>
+
+    <Button
+        android:id="@+id/buttonSwap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />/
+    >
 </LinearLayout>

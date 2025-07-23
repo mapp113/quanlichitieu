@@ -46,7 +46,6 @@ public class CategorySummaryAdapter extends RecyclerView.Adapter<CategorySummary
         CategorySummary item = data.get(position);
         holder.txtCategory.setText(item.getCategoryName());
         holder.txtAmount.setText(item.getAmount() + "đ");
-        holder.txtPercent.setText(String.format("%.1f%%", item.getPercent()));
     }
 
     @Override

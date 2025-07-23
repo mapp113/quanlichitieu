@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.quanlichitieu.data.local.entity.CategorySummary;
 import com.example.quanlichitieu.data.local.entity.Transaction;
 import com.example.quanlichitieu.data.repository.TransactionRepository;
 
@@ -49,5 +50,12 @@ public class TransactionViewModel extends AndroidViewModel {
 
     public LiveData<Double> getTotalExpense() {
         return repository.getTotalExpense();
+    }
+    public LiveData<List<CategorySummary>> getCategorySummariesByMonth(String type, String month) {
+        return repository.getCategorySummariesByMonth(type, month);
+    }
+
+    public LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, String day) {
+        return repository.getCategorySummariesByDay(type, day);
     }
 }
