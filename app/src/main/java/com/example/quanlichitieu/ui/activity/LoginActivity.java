@@ -20,6 +20,7 @@ import com.example.quanlichitieu.data.SessionManager;
 import com.example.quanlichitieu.data.local.database.appDatabase;
 import com.example.quanlichitieu.data.local.entity.User;
 import com.example.quanlichitieu.data.local.utils.PasswordUtils;
+import com.example.quanlichitieu.ui.activity.goal.GoalActivity;
 
 public class LoginActivity extends AppCompatActivity {
     EditText usernameEditText, passwordEditText;

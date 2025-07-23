@@ -6,17 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#f5f5f5"
-    tools:context=".ui.activity.TransactionActivity">
+    tools:context=".ui.activity.TransactionActivity"
+    android:id="@+id/main">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbar"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="#2196F3"
-        android:background="#2196F3"
-        app:title="Giao dịch"
-        app:titleTextColor="#fff"
-        app:navigationIcon="@android:drawable/ic_menu_revert"/>
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="?attr/colorOnPrimary"/>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
@@ -80,6 +78,6 @@
         android:id="@+id/buttonSwap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />/
-    >
+        android:text="Button" />
+
 </LinearLayout>
