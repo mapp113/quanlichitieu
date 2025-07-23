@@ -33,7 +33,7 @@ android {
 
 dependencies {
     implementation(libs.mpandroidchart)
-    implementation(libs.recyclerview.v7)
+    implementation(libs.recyclerview)
     implementation(libs.room.runtime)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
@@ -48,4 +48,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    configurations.all {
+        resolutionStrategy {
+            force("org.jetbrains:annotations:23.0.0")
+        }
+    }
 }

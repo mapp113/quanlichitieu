@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quanlichitieu">
         <activity
+            android:name=".ui.activity.Dashboard_Expense_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.OverviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.DashboardActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.MainActivity"
             android:exported="true">
             <intent-filter>
