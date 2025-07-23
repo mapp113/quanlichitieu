@@ -121,10 +121,10 @@ public class AddEditActivity extends AppCompatActivity {
         etDesc.setText(transaction.title);
         // Format lại ngày khi hiển thị
         try {
-            Date parsed = new SimpleDateFormat("dd/MM/yyyy").parse(transaction.date);
-            etDate.setText(new SimpleDateFormat("dd/MM/yyyy").format(parsed));
+            String dateStr = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date(transaction.date));
+            etDate.setText(dateStr);
         } catch (Exception e) {
-            etDate.setText(transaction.date != null ? transaction.date : "");
+            etDate.setText("");
         }
         if (transaction.type == Type.INCOME) rbIncome.setChecked(true);
         else rbExpense.setChecked(true);
@@ -143,32 +143,23 @@ public class AddEditActivity extends AppCompatActivity {
         String amountStr = etAmount.getText().toString().trim();
         String desc = etDesc.getText().toString().trim();
         String dateStr = etDate.getText().toString().trim();
+        long dateMillis = 0;
+        try {
+            dateMillis = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(dateStr).getTime();
+        } catch (Exception e) {
+            dateMillis = System.currentTimeMillis();
+        }
         if (amountStr.isEmpty() || desc.isEmpty() || rgType.getCheckedRadioButtonId() == -1 || selectedCategoryId == -1) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
         }
         double amount = Double.parseDouble(amountStr);
-        String date;
-        if (transactionId == -1) {
-            date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-        } else {
-            if (dateStr.isEmpty()) {
-                date = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-            } else {
-                try {
-                    Date parsed = new SimpleDateFormat("yyyy-MM-dd").parse(dateStr);
-                    date = new SimpleDateFormat("dd/MM/yyyy").format(parsed);
-                } catch (ParseException e) {
-                    date = dateStr;
-                }
-            }
-        }
-        Type type = rbIncome.isChecked() ? Type.INCOME : Type.EXPENSE;
         String address = etAddress.getText().toString().trim();
         int userOwnerId = 1; // TODO: Lấy userId thực tế từ session/login
-        saveTransactionWithCategoryId(desc, amount, type, date, address, selectedCategoryId, userOwnerId);
+        Type type = rbIncome.isChecked() ? Type.INCOME : Type.EXPENSE;
+        saveTransactionWithCategoryId(desc, amount, type, dateMillis, address, selectedCategoryId, userOwnerId);
     }
-    private void saveTransactionWithCategoryId(String desc, double amount, Type type, String date, String address, int categoryId, int userOwnerId) {
+    private void saveTransactionWithCategoryId(String desc, double amount, Type type, long date, String address, int categoryId, int userOwnerId) {
         String addressToSave = (selectedLat != 0 && selectedLng != 0) ? (selectedLat + "," + selectedLng) : address;
         Transaction transaction = new Transaction(desc, amount, type, date, addressToSave, categoryId, userOwnerId);
         if (transactionId == -1) {

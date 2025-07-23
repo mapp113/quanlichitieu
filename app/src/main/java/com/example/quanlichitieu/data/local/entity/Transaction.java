@@ -33,7 +33,7 @@ public class Transaction {
 
     public Type type; // INCOME or EXPENSE
 
-    public String date;
+    public long date;
 
     public String address;
 
@@ -43,7 +43,7 @@ public class Transaction {
     @ColumnInfo(index = true)
     public int userOwnerId;
 
-    public Transaction(String title, double amount, Type type, String date, String address, Integer categoryId, int userOwnerId) {
+    public Transaction(String title, double amount, Type type, long date, String address, Integer categoryId, int userOwnerId) {
         this.title = title;
         this.amount = amount;
         this.type = type;
