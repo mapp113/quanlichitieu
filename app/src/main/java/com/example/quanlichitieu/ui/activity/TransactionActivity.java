@@ -2,6 +2,8 @@ package com.example.quanlichitieu.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -9,6 +11,7 @@ import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -18,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlichitieu.R;
 import com.example.quanlichitieu.data.local.entity.Transaction;
+import com.example.quanlichitieu.data.local.utils.MenuHandler;
 import com.example.quanlichitieu.ui.adapter.TransactionAdapter;
 import com.example.quanlichitieu.viewmodel.TransactionViewModel;
 import com.example.quanlichitieu.data.local.entity.Category;
@@ -43,6 +47,15 @@ public class TransactionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_transaction);
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+
         tvTotalIncome = findViewById(R.id.tvTotalIncome);
         tvTotalExpense = findViewById(R.id.tvTotalExpense);
         Button swap = findViewById(R.id.buttonSwap);
@@ -114,5 +127,18 @@ public class TransactionActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (MenuHandler.handleMenuClick(this, item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
