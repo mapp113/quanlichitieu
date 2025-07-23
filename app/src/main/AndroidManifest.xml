@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quanlichitieu">
         <activity
+            android:name=".ui.activity.ShoppingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.TransactionRealActivity"
             android:exported="false" />
         <activity
@@ -28,10 +31,10 @@
             android:exported="false" />
         <activity
             android:name=".ui.activity.goal.CreateGoalActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.activity.MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="true">
@@ -44,7 +47,6 @@
         <activity android:name=".ui.activity.CurrencyConverterActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.ToolsActivity" />
-
     </application>
 
 </manifest>
