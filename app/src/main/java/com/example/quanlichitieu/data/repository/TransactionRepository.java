@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.quanlichitieu.data.local.dao.TransactionDao;
 import com.example.quanlichitieu.data.local.database.appDatabase;
+import com.example.quanlichitieu.data.local.entity.CategorySummary;
 import com.example.quanlichitieu.data.local.entity.Transaction;
 
 import java.util.List;
@@ -50,5 +51,12 @@ public class TransactionRepository {
 
     public LiveData<Double> getTotalExpense() {
         return transactionDao.getTotalExpense();
+    }
+    public LiveData<List<CategorySummary>> getCategorySummariesByMonth(String type, String month) {
+        return transactionDao.getCategorySummariesByMonth(type, month);
+    }
+
+    public LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, String day) {
+        return transactionDao.getCategorySummariesByDay(type, day);
     }
 }

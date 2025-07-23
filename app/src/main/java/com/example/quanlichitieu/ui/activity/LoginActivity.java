@@ -1,6 +1,7 @@
 package com.example.quanlichitieu.ui.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quanlichitieu.R;
+import com.example.quanlichitieu.data.SessionManager;
 import com.example.quanlichitieu.data.local.database.appDatabase;
 import com.example.quanlichitieu.data.local.entity.User;
 import com.example.quanlichitieu.data.local.utils.PasswordUtils;
@@ -59,7 +61,10 @@ public class LoginActivity extends AppCompatActivity {
                         String hashedInput = PasswordUtils.hashPassword(password, user.salt);
                         if (hashedInput.equals(user.password)) {
                             Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
-                            // TODO: Chuyển sang màn hình chính
+                            //save session and go to next tab
+                            SessionManager.saveUserId(this,user.userId);
+                            Intent intent = new Intent(this, TransactionActivity.class);
+                            startActivity(intent);
                         } else {
                             Toast.makeText(this, "Sai mật khẩu", Toast.LENGTH_SHORT).show();
                         }

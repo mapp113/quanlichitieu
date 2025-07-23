@@ -27,5 +27,7 @@ public interface CategoryDao {
 
     @Query("SELECT * FROM category WHERE id = :id LIMIT 1")
     LiveData<Category> findById(int id);
+    @Query("Select name from category where id=:id")
+    LiveData<String> getCategoryNameById(int id);
 }
 

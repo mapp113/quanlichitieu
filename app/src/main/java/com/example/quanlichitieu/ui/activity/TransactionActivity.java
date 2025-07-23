@@ -3,6 +3,7 @@ package com.example.quanlichitieu.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.util.Log;
 
@@ -38,6 +39,10 @@ public class TransactionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_transaction);
         tvTotalIncome = findViewById(R.id.tvTotalIncome);
         tvTotalExpense = findViewById(R.id.tvTotalExpense);
+        Button swap = findViewById(R.id.buttonSwap);
+        swap.setOnClickListener(view -> {
+            startActivity(new Intent(this,TransactionRealActivity.class));
+        });
         tvBalance = findViewById(R.id.tvBalance);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

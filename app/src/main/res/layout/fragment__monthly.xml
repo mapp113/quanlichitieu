@@ -14,8 +14,8 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/monthTab"
-            android:text="Hàng Tháng"
+            android:id="@+id/DayTab"
+            android:text="Ngày"
             android:layout_weight="1"
             android:backgroundTint="@color/orange"
             android:textColor="@android:color/white"
@@ -23,8 +23,8 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/yearTab"
-            android:text="Hàng Năm"
+            android:id="@+id/MonthTab"
+            android:text="Hàng Tháng"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content" />
