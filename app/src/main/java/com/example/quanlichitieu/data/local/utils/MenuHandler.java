@@ -11,7 +11,7 @@ import com.example.quanlichitieu.ui.activity.SettingsActivity;
 import com.example.quanlichitieu.ui.activity.ToolsActivity;
 import com.example.quanlichitieu.ui.activity.TransactionActivity;
 import com.example.quanlichitieu.ui.activity.TransactionRealActivity;
-import com.example.quanlichitieu.ui.activity.goal.GoalActivity;
+import com.example.quanlichitieu.ui.activity.goal.ListGoalActivity;
 
 public class MenuHandler {
 
@@ -27,7 +27,7 @@ public class MenuHandler {
             context.startActivity(intent);
             return true;
         } else if (id == R.id.goals) {
-            Intent intent = new Intent(context, GoalActivity.class);
+            Intent intent = new Intent(context, ListGoalActivity.class);
             context.startActivity(intent);
             return true;
         } else if (id == R.id.tools) {
