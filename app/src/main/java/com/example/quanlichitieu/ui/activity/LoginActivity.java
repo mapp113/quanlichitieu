@@ -1,9 +1,12 @@
 package com.example.quanlichitieu.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,33 +15,57 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quanlichitieu.R;
+import com.example.quanlichitieu.data.local.database.appDatabase;
+import com.example.quanlichitieu.data.local.entity.User;
+import com.example.quanlichitieu.data.local.utils.PasswordUtils;
 
 public class LoginActivity extends AppCompatActivity {
-
-    EditText username;
-    EditText password;
-    Button loginBtn;
+    EditText usernameEditText, passwordEditText;
+    Button loginButton;
+    TextView registerTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+
+        usernameEditText = findViewById(R.id.username);
+        passwordEditText = findViewById(R.id.password);
+        registerTextView = findViewById(R.id.signupText);
+        loginButton = findViewById(R.id.loginBtn);
+
+        registerTextView.setOnClickListener(view -> {
+            // Chuyển sang màn hình đăng ký
+            startActivity(new Intent(this, RegisterActivity.class));
         });
 
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        loginBtn = findViewById(R.id.loginBtn);
+        loginButton.setOnClickListener(v -> {
+            String username = usernameEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
 
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
+            if (username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                return;
             }
+
+            // Chạy DB query trong luồng nền
+            new Thread(() -> {
+                User user = appDatabase.getDatabase(this).userDao().getUserByUsername(username);
+
+                runOnUiThread(() -> {
+                    if (user == null) {
+                        Toast.makeText(this, "Tài khoản không tồn tại", Toast.LENGTH_SHORT).show();
+                    } else {
+                        String hashedInput = PasswordUtils.hashPassword(password, user.salt);
+                        if (hashedInput.equals(user.password)) {
+                            Toast.makeText(this, "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                            // TODO: Chuyển sang màn hình chính
+                        } else {
+                            Toast.makeText(this, "Sai mật khẩu", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+            }).start();
         });
     }
 }

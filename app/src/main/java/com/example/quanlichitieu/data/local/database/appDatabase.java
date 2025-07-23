@@ -8,17 +8,20 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
 import com.example.quanlichitieu.data.local.dao.TransactionDao;
+import com.example.quanlichitieu.data.local.dao.UserDao;
 import com.example.quanlichitieu.data.local.entity.Category;
 import com.example.quanlichitieu.data.local.entity.Transaction;
 import com.example.quanlichitieu.data.local.entity.User;
 import com.example.quanlichitieu.data.local.entity.Converters;
 
-@Database(entities = {Transaction.class}, version = 5, exportSchema = false)
+@Database(entities = {Transaction.class,User.class}, version = 5, exportSchema = false)
 @TypeConverters(Converters.class)
 public abstract class appDatabase extends RoomDatabase {
     private static appDatabase instance;
 
     public abstract TransactionDao transactionDao();
+
+    public abstract UserDao userDao();
 
     public static synchronized appDatabase getDatabase(Context context) {
         if (instance == null) {
