@@ -5,18 +5,34 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+
+@Entity(
+        tableName = "transactions",
+        foreignKeys = {
+                @ForeignKey(
+                        entity = User.class,
+                        parentColumns = "userId",
+                        childColumns = "userOwnerId",
+                        onDelete = ForeignKey.CASCADE
+                ),
+                @ForeignKey(
+                        entity = Category.class,
+                        parentColumns = "id",
+                        childColumns = "categoryId",
+                        onDelete = ForeignKey.SET_NULL
+                )
+        }
+y=======
 import com.example.quanlichitieu.data.local.entity.User;
 import com.example.quanlichitieu.data.local.entity.Category;
 
 @Entity(
         tableName = "transactions"
-)
-public class Transaction {
-    @PrimaryKey(autoGenerate = true)
-    public int id;
 
-    public String title;
-    public double amount;
+    public int category; //        FOOD,SALARY,ENTERTAINMENT,TRANSPORT, INVESTMENT
+    public Type type; // "INCOME" OR "EXPENSE"
+    public long date;
+    public int address;
     public Type type;
     public String date;
     public int address;
@@ -28,6 +44,7 @@ public class Transaction {
         this.date = date;
         this.address = address;
     }
+
 
     public int getId() {
         return id;
@@ -67,14 +84,9 @@ public class Transaction {
 
     public void setDate(String date) {
         this.date = date;
+
+
     }
 
-    public int getAddress() {
-        return address;
-    }
-
-    public void setAddress(int address) {
-        this.address = address;
-    }
 }
 

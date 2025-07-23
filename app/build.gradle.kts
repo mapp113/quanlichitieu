@@ -50,6 +50,8 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     configurations.all {
-        exclude(group = "com.intellij", module = "annotations")
+        resolutionStrategy {
+            force("org.jetbrains:annotations:23.0.0")
+        }
     }
 }

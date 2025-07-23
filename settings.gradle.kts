@@ -12,10 +12,9 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.PREFER_SETTINGS)
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
-        mavenCentral()
         mavenCentral()
         maven(url = "https://jitpack.io")
     }
@@ -23,4 +22,3 @@ dependencyResolutionManagement {
 
 rootProject.name = "quanlichitieu"
 include(":app")
- 
