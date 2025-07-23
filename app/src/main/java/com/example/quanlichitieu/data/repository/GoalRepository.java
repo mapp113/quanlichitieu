@@ -18,10 +18,6 @@ public class GoalRepository {
         goalDao = db.goalDAO();
     }
 
-//    public LiveData<List<Goal>> getAllGoals(int userId) {
-//        return goalDao.getGoalsByUserId(userId);
-//    }
-
     public LiveData<List<Goal>> getAll() {
         return goalDao.getAll();
     }
@@ -31,14 +27,14 @@ public class GoalRepository {
     }
 
     public void insert(Goal goal) {
-        goalDao.Inset(goal);
+        goalDao.inset(goal);
     }
 
     public void update(Goal goal) {
-        goalDao.Update(goal);
+        goalDao.update(goal);
     }
 
     public void delete(Goal goal) {
-        goalDao.Delete(goal);
+        goalDao.update(goal);
     }
 }
