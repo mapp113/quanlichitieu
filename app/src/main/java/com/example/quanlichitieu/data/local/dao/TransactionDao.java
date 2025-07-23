@@ -44,6 +44,5 @@ public interface TransactionDao {
             "WHERE t.type = :type AND strftime('%Y-%m-%d', datetime(t.date / 1000, 'unixepoch')) = :day " +
             "GROUP BY t.categoryId")
     LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, String day);
-//    @Query("SELECT * FROM transactions WHERE userOwnerId = :userId ORDER BY id DESC")
-//    List<Transaction> getByUserOwnerId(int userId);
+
 }

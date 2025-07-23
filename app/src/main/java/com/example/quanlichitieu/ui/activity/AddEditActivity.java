@@ -57,7 +57,6 @@ public class AddEditActivity extends AppCompatActivity {
         etAmount = findViewById(R.id.etAmount);
         etDesc = findViewById(R.id.etDesc);
         etDate = findViewById(R.id.etDate);
-        // Nếu là thêm mới, set hint ngày hiện tại cho etDate
         if (transactionId == -1) {
             String today = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             etDate.setHint(today);
@@ -100,16 +99,6 @@ public class AddEditActivity extends AppCompatActivity {
             }
             startActivityForResult(intent, REQUEST_CODE_PICK_LOCATION);
         });
-        // categoryViewModel.getAllCategories().observe(this, new Observer<List<Category>>() {
-        //     @Override
-        //     public void onChanged(List<Category> categories) {
-        //         categoryList = categories;
-        //         ArrayAdapter<String> adapter = new ArrayAdapter<>(AddEditActivity.this, android.R.layout.simple_spinner_item);
-        //         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //         for (Category c : categories) adapter.add(c.getName());
-        //         spCategory.setAdapter(adapter);
-        //     }
-        // });
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("transaction_id")) {
             transactionId = intent.getIntExtra("transaction_id", -1);
@@ -165,7 +154,6 @@ public class AddEditActivity extends AppCompatActivity {
         saveTransactionWithCategoryId(desc, amount, type, date, address, selectedCategoryId, userOwnerId);
     }
     private void saveTransactionWithCategoryId(String desc, double amount, Type type, String date, String address, int categoryId, int userOwnerId) {
-        // Nếu có lat/lng thì lưu vào address, nếu không thì dùng address nhập tay
         String addressToSave = (selectedLat != 0 && selectedLng != 0) ? (selectedLat + "," + selectedLng) : address;
         Transaction transaction = new Transaction(desc, amount, type, date, addressToSave, categoryId, userOwnerId);
         if (transactionId == -1) {

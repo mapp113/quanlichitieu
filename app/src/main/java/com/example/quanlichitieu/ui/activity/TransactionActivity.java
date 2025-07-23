@@ -68,13 +68,13 @@ public class TransactionActivity extends AppCompatActivity {
             adapter.setItems(transactionList);
         });
         transactionViewModel.getTotalIncome().observe(this, income -> {
-            Log.d("TransactionActivity", "Tổng thu: " + income);
-            tvTotalIncome.setText("Tổng thu: " + (income != null ? income : 0));
+            Log.d("TransactionActivity", "Tổng thu: " + income + "đ");
+            tvTotalIncome.setText("Tổng thu: " + (income != null ? income : 0) + "đ");
             updateBalance();
         });
         transactionViewModel.getTotalExpense().observe(this, expense -> {
-            Log.d("TransactionActivity", "Tổng chi: " + expense);
-            tvTotalExpense.setText("Tổng chi: " + (expense != null ? expense : 0));
+            Log.d("TransactionActivity", "Tổng chi: " + expense + "đ");
+            tvTotalExpense.setText("Tổng chi: " + (expense != null ? expense : 0) + "đ");
             updateBalance();
         });
     }
@@ -99,6 +99,5 @@ public class TransactionActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // Không cần gọi lại observeData() ở đây vì LiveData đã tự động cập nhật
     }
 }
