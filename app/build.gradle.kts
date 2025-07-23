@@ -32,12 +32,13 @@ android {
 }
 
 dependencies {
+//    implementation(libs.)
     implementation(libs.mpandroidchart)
     implementation(libs.recyclerview)
     implementation(libs.room.runtime)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
-    implementation(libs.room.compiler)
+    annotationProcessor(libs.room.compiler)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     implementation(libs.appcompat)

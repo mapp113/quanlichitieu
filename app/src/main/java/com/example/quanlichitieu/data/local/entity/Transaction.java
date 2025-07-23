@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
+
 @Entity(
         tableName = "transactions",
         foreignKeys = {
@@ -21,29 +22,70 @@ import androidx.room.PrimaryKey;
                         onDelete = ForeignKey.SET_NULL
                 )
         }
-)
-public class Transaction {
-    @PrimaryKey(autoGenerate = true)
-    public int id;
+y=======
+import com.example.quanlichitieu.data.local.entity.User;
+import com.example.quanlichitieu.data.local.entity.Category;
 
-    public String title;
-    public double amount;
+@Entity(
+        tableName = "transactions"
+
     public int category; //        FOOD,SALARY,ENTERTAINMENT,TRANSPORT, INVESTMENT
     public Type type; // "INCOME" OR "EXPENSE"
     public long date;
     public int address;
+    public Type type;
+    public String date;
+    public int address;
 
-    @ColumnInfo(index = true)
-    public int userOwnerId;
-
-    public Transaction(String title, double amount, int category, Type type, long date, int userOwnerId,int address) {
+    public Transaction(String title, double amount, Type type, String date, int address) {
         this.title = title;
         this.amount = amount;
-        this.category = category;
         this.type = type;
         this.date = date;
-        this.userOwnerId = userOwnerId;
-        this.address=address;
+        this.address = address;
+    }
+
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+
+
     }
 
 }
