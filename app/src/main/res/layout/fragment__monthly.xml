@@ -14,7 +14,7 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/DayTab"
+            android:id="@+id/Daytab"
             android:text="Ngày"
             android:layout_weight="1"
             android:backgroundTint="@color/orange"
