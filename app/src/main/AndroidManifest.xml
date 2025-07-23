@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Quanlichitieu">
         <activity
+            android:name=".ui.activity.AddCategoryActivity"
+
             android:name=".ui.activity.ShoppingListActivity"
+
             android:exported="false" />
         <activity
             android:name=".ui.activity.TransactionRealActivity"
