@@ -34,7 +34,7 @@ public class AddCategoryActivity extends AppCompatActivity {
             String name = editCategoryName.getText().toString().trim();
             if (!name.isEmpty()) {
                 categoryViewModel.insert(new Category(name));
-                finish(); // hoặc chuyển lại về màn trước đó
+                finish();
             } else {
                 Toast.makeText(this, "Vui lòng nhập tên danh mục", Toast.LENGTH_SHORT).show();
             }

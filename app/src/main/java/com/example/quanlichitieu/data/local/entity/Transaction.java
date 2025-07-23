@@ -33,9 +33,9 @@ public class Transaction {
 
     public Type type; // INCOME or EXPENSE
 
-    public String date;
+    public long date;
 
-    public int address;
+    public String address;
 
     @ColumnInfo(index = true)
     public Integer categoryId;
@@ -43,7 +43,7 @@ public class Transaction {
     @ColumnInfo(index = true)
     public int userOwnerId;
 
-    public Transaction(String title, double amount, Type type, String date, int address, Integer categoryId, int userOwnerId) {
+    public Transaction(String title, double amount, Type type, long date, String address, Integer categoryId, int userOwnerId) {
         this.title = title;
         this.amount = amount;
         this.type = type;
@@ -53,4 +53,6 @@ public class Transaction {
         this.userOwnerId = userOwnerId;
     }
 
+    public String getAddress() { return address; }
+    public void setAddress(String address) { this.address = address; }
 }

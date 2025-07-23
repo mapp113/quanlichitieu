@@ -116,6 +116,7 @@ public class Fragment_Monthly extends Fragment {
     }
 
     private void loadData() {
+        long dateMillis = selectedDate.atStartOfDay(java.time.ZoneId.systemDefault()).toInstant().toEpochMilli();
         DateTimeFormatter dayFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateTimeFormatter monthFormatter = DateTimeFormatter.ofPattern("MM");
 
@@ -128,8 +129,8 @@ public class Fragment_Monthly extends Fragment {
                 : selectedDate.format(DateTimeFormatter.ofPattern("MM/yyyy")));
 
         LiveData<List<CategorySummary>> liveData = isDailyMode
-                ? transactionViewModel.getCategorySummariesByDay(selectedType, formattedDate)
-                : transactionViewModel.getCategorySummariesByMonth(selectedType, formattedDate);
+                ? transactionViewModel.getCategorySummariesByDay(selectedType, dateMillis)
+                : transactionViewModel.getCategorySummariesByMonth(selectedType, dateMillis);
 
         liveData.observe(getViewLifecycleOwner(), summaries -> {
             if (summaries == null) return;

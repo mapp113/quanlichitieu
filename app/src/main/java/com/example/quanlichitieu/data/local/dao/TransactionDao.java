@@ -35,15 +35,15 @@ public interface TransactionDao {
     @Query("SELECT c.name AS categoryName, SUM(t.amount) AS amount " +
             "FROM transactions t " +
             "LEFT JOIN category c ON t.categoryId = c.id " +
-            "WHERE t.type = :type AND strftime('%m', datetime(t.date / 1000, 'unixepoch')) = :month " +
+            "WHERE t.type = :type AND strftime('%m', datetime(t.date / 1000, 'unixepoch')) = strftime('%m', datetime(:monthMillis / 1000, 'unixepoch')) " +
+            "AND strftime('%Y', datetime(t.date / 1000, 'unixepoch')) = strftime('%Y', datetime(:monthMillis / 1000, 'unixepoch')) " +
             "GROUP BY t.categoryId")
-    LiveData<List<CategorySummary>> getCategorySummariesByMonth(String type, String month);
+    LiveData<List<CategorySummary>> getCategorySummariesByMonth(String type, long monthMillis);
     @Query("SELECT c.name AS categoryName, SUM(t.amount) AS amount " +
             "FROM transactions t " +
             "LEFT JOIN category c ON t.categoryId = c.id " +
-            "WHERE t.type = :type AND strftime('%Y-%m-%d', datetime(t.date / 1000, 'unixepoch')) = :day " +
+            "WHERE t.type = :type AND strftime('%Y-%m-%d', datetime(t.date / 1000, 'unixepoch')) = strftime('%Y-%m-%d', datetime(:dayMillis / 1000, 'unixepoch')) " +
             "GROUP BY t.categoryId")
-    LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, String day);
-//    @Query("SELECT * FROM transactions WHERE userOwnerId = :userId ORDER BY id DESC")
-//    List<Transaction> getByUserOwnerId(int userId);
+    LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, long dayMillis);
+
 }

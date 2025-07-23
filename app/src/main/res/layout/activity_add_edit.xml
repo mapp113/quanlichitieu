@@ -11,7 +11,9 @@
 
     <LinearLayout android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        >
 
         <EditText android:id="@+id/etAmount"
             android:hint="Số tiền"
@@ -23,7 +25,7 @@
             android:padding="10dp"/>
 
         <EditText android:id="@+id/etDesc"
-            android:hint="Mô tả"
+            android:hint="Tiêu Đề"
             android:layout_marginBottom="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,9 +58,12 @@
                 android:layout_height="wrap_content"/>
         </RadioGroup>
 
-        <!-- Xóa Spinner chọn Category và EditText nhập User ID -->
-        <!-- <Spinner android:id="@+id/spCategory" ... /> -->
-        <!-- <EditText android:id="@+id/etUserOwnerId" ... /> -->
+
+        <Spinner
+            android:id="@+id/spCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"/>
 
         <EditText android:id="@+id/etAddress"
             android:hint="Địa chỉ"
@@ -67,6 +72,13 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bg_input"
             android:padding="10dp"/>
+
+        <Button
+            android:id="@+id/btnChooseLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/choose_location"
+            android:layout_marginBottom="12dp"/>
 
         <Button android:id="@+id/btnSave"
             android:text="Lưu"

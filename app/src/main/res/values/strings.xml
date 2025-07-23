@@ -2,4 +2,5 @@
     <string name="app_name">quanlichitieu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="choose_location">Chọn vị trí trên bản đồ</string>
 </resources>

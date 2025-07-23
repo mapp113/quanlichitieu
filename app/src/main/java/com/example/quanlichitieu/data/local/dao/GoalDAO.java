@@ -14,19 +14,18 @@ import java.util.List;
 @Dao
 public interface GoalDAO {
     @Insert
-    void Inset(Goal goal);
+    void inset(Goal goal);
 
     @Update
-    void Update(Goal goal);
+    void update(Goal goal);
 
     @Delete
-    void Delete(Goal goal);
+    void delete(Goal goal);
 
-    @Query("SELECT * FROM goals")
+    @Query("SELECT * FROM goals ORDER BY goalId ASC")
     LiveData<List<Goal>> getAll();
 
     @Query("SELECT * FROM goals Where goalId = :id")
     LiveData<Goal> findById(int id);
-
 
 }

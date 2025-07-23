@@ -32,9 +32,12 @@
             android:name=".ui.activity.AddEditActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.goal.GoalActivity"
+            android:name=".ui.activity.goal.ListGoalActivity"
             android:exported="true" >
         </activity>
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCKQS57tprSt7-rgKOQ1BI6pbXsyGtiiCU" />
         <activity
             android:name=".ui.activity.goal.CreateGoalActivity"
             android:exported="true" />
@@ -53,6 +56,7 @@
         <activity android:name=".ui.activity.CurrencyConverterActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.ToolsActivity" />
+        <activity android:name=".ui.activity.MapPickerActivity" android:exported="false"/>
     </application>
 
 </manifest>

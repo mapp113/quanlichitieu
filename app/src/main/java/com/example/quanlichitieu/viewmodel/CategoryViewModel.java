@@ -12,7 +12,7 @@ import com.example.quanlichitieu.data.repository.CategoryRepository;
 import java.util.List;
 
 public class CategoryViewModel extends AndroidViewModel {
-    private final CategoryRepository repository;
+    public final CategoryRepository repository;
     private final LiveData<List<Category>> allCategories;
 
     public CategoryViewModel(@NonNull Application application) {
