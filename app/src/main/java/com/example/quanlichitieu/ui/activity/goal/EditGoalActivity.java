@@ -88,8 +88,11 @@ public class EditGoalActivity extends AppCompatActivity {
             if (currentGoal == null) return;
 
             String title = editTitle.getText().toString();
-            double target = Double.parseDouble(editTarget.getText().toString());
-            double current = Double.parseDouble(editCurrent.getText().toString());
+            String targetStr = editTarget.getText().toString().replace(",", "");
+            String currentStr = editCurrent.getText().toString().replace(",", "");
+
+            double target = Double.parseDouble(targetStr);
+            double current = Double.parseDouble(currentStr);
 
             Calendar cal = Calendar.getInstance();
             cal.set(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth());

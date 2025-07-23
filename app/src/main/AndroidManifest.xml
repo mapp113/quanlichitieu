@@ -34,11 +34,6 @@
         <activity
             android:name=".ui.activity.goal.ListGoalActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -52,12 +47,21 @@
         <activity
             android:name=".ui.activity.LoginActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".ui.activity.CurrencyConverterActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.ToolsActivity" />
         <activity android:name=".ui.activity.MapPickerActivity" android:exported="false"/>
-
+        <activity
+            android:name=".ui.activity.goal.EditGoalActivity"
+            android:exported="true" />
     </application>
 
 </manifest>
+
+
