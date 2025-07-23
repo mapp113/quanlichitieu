@@ -20,16 +20,22 @@ import com.example.quanlichitieu.R;
 import com.example.quanlichitieu.data.local.entity.Transaction;
 import com.example.quanlichitieu.ui.adapter.TransactionAdapter;
 import com.example.quanlichitieu.viewmodel.TransactionViewModel;
+import com.example.quanlichitieu.data.local.entity.Category;
+import com.example.quanlichitieu.viewmodel.CategoryViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class TransactionActivity extends AppCompatActivity {
 
     private TransactionViewModel transactionViewModel;
     private TransactionAdapter adapter;
     private List<Transaction> transactionList = new ArrayList<>();
+    private List<Category> categoryList = new ArrayList<>();
+    private CategoryViewModel categoryViewModel;
     private TextView tvTotalIncome, tvTotalExpense, tvBalance;
 
     @Override
@@ -46,15 +52,20 @@ public class TransactionActivity extends AppCompatActivity {
         tvBalance = findViewById(R.id.tvBalance);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TransactionAdapter(transactionList,
-            transaction -> {},
-            transaction -> {},
-            this::onEditTransaction,
-            this::onDeleteTransaction
-        );
-        recyclerView.setAdapter(adapter);
         transactionViewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
-        observeData();
+        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        categoryViewModel.getAllCategories().observe(this, categories -> {
+            categoryList = categories != null ? categories : new ArrayList<>();
+            // Khởi tạo adapter khi đã có categoryList
+            adapter = new TransactionAdapter(transactionList, categoryList,
+                transaction -> {},
+                transaction -> {},
+                this::onEditTransaction,
+                this::onDeleteTransaction
+            );
+            recyclerView.setAdapter(adapter);
+            observeData();
+        });
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddEditActivity.class);
@@ -65,25 +76,29 @@ public class TransactionActivity extends AppCompatActivity {
     private void observeData() {
         transactionViewModel.getAllTransactions().observe(this, transactions -> {
             transactionList = transactions != null ? transactions : new ArrayList<>();
-            adapter.setItems(transactionList);
+            if (adapter != null) adapter.setItems(transactionList);
         });
         transactionViewModel.getTotalIncome().observe(this, income -> {
-            Log.d("TransactionActivity", "Tổng thu: " + income + "đ");
-            tvTotalIncome.setText("Tổng thu: " + (income != null ? income : 0) + "đ");
+            NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+            String incomeStr = formatter.format(income != null ? income : 0) + "đ";
+            tvTotalIncome.setText("Tổng thu: " + incomeStr);
             updateBalance();
         });
         transactionViewModel.getTotalExpense().observe(this, expense -> {
-            Log.d("TransactionActivity", "Tổng chi: " + expense + "đ");
-            tvTotalExpense.setText("Tổng chi: " + (expense != null ? expense : 0) + "đ");
+            NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+            String expenseStr = formatter.format(expense != null ? expense : 0) + "đ";
+            tvTotalExpense.setText("Tổng chi: " + expenseStr);
             updateBalance();
         });
     }
 
     private void updateBalance() {
         double income = 0, expense = 0;
-        try { income = Double.parseDouble(tvTotalIncome.getText().toString().replaceAll("[^0-9.]", "")); } catch (Exception ignored) {}
-        try { expense = Double.parseDouble(tvTotalExpense.getText().toString().replaceAll("[^0-9.]", "")); } catch (Exception ignored) {}
-        tvBalance.setText("Số dư: " + (income - expense));
+        try { income = Double.parseDouble(tvTotalIncome.getText().toString().replaceAll("[^0-9.-]", "")); } catch (Exception ignored) {}
+        try { expense = Double.parseDouble(tvTotalExpense.getText().toString().replaceAll("[^0-9.-]", "")); } catch (Exception ignored) {}
+        NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
+        String balanceStr = formatter.format(income - expense) + "đ";
+        tvBalance.setText("Số dư: " + balanceStr);
     }
 
     private void onEditTransaction(Transaction transaction) {
