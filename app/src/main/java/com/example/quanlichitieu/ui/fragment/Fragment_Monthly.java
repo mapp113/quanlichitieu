@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlichitieu.R;
+import com.example.quanlichitieu.data.local.database.appDatabase;
 import com.example.quanlichitieu.data.local.entity.Category;
 import com.example.quanlichitieu.data.local.entity.CategorySummary;
 import com.example.quanlichitieu.data.local.entity.Transaction;
@@ -39,7 +41,9 @@ public class Fragment_Monthly extends Fragment {
     private PieChart pieChart;
     private RecyclerView recyclerView;
     private CategorySummaryAdapter adapter;
+
     private List<CategorySummary> categorySummaries = new ArrayList<>();
+
 
     private LocalDate selectedDate = LocalDate.now(); // Requires API 26+
 
@@ -52,6 +56,8 @@ public class Fragment_Monthly extends Fragment {
     }
 
     private void initViews(View view) {
+        appDatabase db = appDatabase.getInstance(getContext());
+
         txtMonthYear = view.findViewById(R.id.txtMonthYear);
         txtTotalExpense = view.findViewById(R.id.txtTotalExpense);
         txtTotalIncome = view.findViewById(R.id.txtTotalIncome);
@@ -76,66 +82,66 @@ public class Fragment_Monthly extends Fragment {
     private void loadData() {
         txtMonthYear.setText(selectedDate.format(DateTimeFormatter.ofPattern("MM/yyyy")));
 
-        // Giả sử bạn lấy dữ liệu từ database:
-        List<Transaction> all = TransactionDatabase.getInstance(getContext()).transactionDao().getAll();
+        appDatabase.getInstance(getContext()).transactionDao().getAll()
+                .observe(getViewLifecycleOwner(), transactions -> {
+                    if (transactions == null) return;
 
-        // Lọc theo tháng
-        List<Transaction> monthTransactions = all.stream()
-                .filter(t -> {
-                    LocalDate transactionDate = Instant.ofEpochMilli(t.date)  // long → Instant
-                            .atZone(ZoneId.systemDefault())                       // xét theo múi giờ hệ thống
-                            .toLocalDate();                                       // Instant → LocalDate
+                    // Lọc theo tháng
+                    List<Transaction> monthTransactions = new ArrayList<>();
+                    for (Transaction t : transactions) {
+                        LocalDate transactionDate = Instant.ofEpochMilli(t.date)
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate();
+                        if (YearMonth.from(transactionDate).equals(YearMonth.from(selectedDate))) {
+                            monthTransactions.add(t);
+                        }
+                    }
 
-                    return YearMonth.from(transactionDate)
-                            .equals(YearMonth.from(selectedDate));
-                })
-                .collect(Collectors.toList());
+                    // Xử lý thống kê
+                    double totalIncome = 0, totalExpense = 0;
+                    Map<Integer, Double> categoryMap = new HashMap<>();
 
+                    for (Transaction t : monthTransactions) {
+                        if (t.type == Type.INCOME) {
+                            totalIncome += t.amount;
+                        } else {
+                            totalExpense += t.amount;
+                            double current = categoryMap.getOrDefault(t.categoryId, 0.0);
+                            categoryMap.put(t.categoryId, current + t.amount);
+                        }
+                    }
 
-        double totalIncome = 0, totalExpense = 0;
-        Map<Integer, Double> categoryMap = new HashMap<>();
+                    txtTotalIncome.setText("+" + totalIncome + "đ");
+                    txtTotalExpense.setText("-" + totalExpense + "đ");
+                    txtNet.setText((totalIncome - totalExpense) + "đ");
 
-        for (Transaction t : monthTransactions) {
-            if (t.type== Type.INCOME) {
-                totalIncome +=  t.amount;
-            } else {
-                totalExpense += t.amount;
-                Double currentObj = categoryMap.get(t.category);
-                double current = currentObj != null ? currentObj : 0.0;
-                categoryMap.put(t.category, current + t.amount);
-            }
-        }
+                    // Biểu đồ + danh sách
+                    pieChart.setUsePercentValues(true);
+                    List<PieEntry> entries = new ArrayList<>();
+                    categorySummaries.clear();
 
-        txtTotalIncome.setText("+" + totalIncome + "đ");
-        txtTotalExpense.setText("-" + totalExpense + "đ");
-        txtNet.setText((totalIncome - totalExpense) + "đ");
+                    for (Map.Entry<Integer, Double> entry : categoryMap.entrySet()) {
+                        double percent = (entry.getValue() * 100f) / totalExpense;
 
-        // Biểu đồ
-        pieChart.setUsePercentValues(true);
-        List<PieEntry> entries = new ArrayList<>();
-        categorySummaries.clear();
+                        Category category = appDatabase.getInstance(getContext())
+                                .categoryDao().findById(entry.getKey());
 
-        for (Map.Entry<Integer, Double> entry : categoryMap.entrySet()) {
-            double percent = (entry.getValue() * 100f) / totalExpense;
-            Category category = TransactionDatabase.getInstance(getContext())
-                    .categoryDao()
-                    .findById(entry.getKey());
-            String categoryName = category != null ? category.getName() : "Không rõ";
+                        String categoryName = (category != null) ? category.getName() : "Không rõ";
 
-            categorySummaries.add(new CategorySummary(categoryName, entry.getValue(), percent));
-            entries.add(new PieEntry( entry.getValue().floatValue(), categoryName));
+                        categorySummaries.add(new CategorySummary(categoryName, entry.getValue(), percent));
+                        entries.add(new PieEntry(entry.getValue().floatValue(), categoryName));
+                    }
 
-        }
+                    PieDataSet dataSet = new PieDataSet(entries, "");
+                    dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+                    PieData pieData = new PieData(dataSet);
+                    pieData.setValueTextSize(12f);
+                    pieData.setValueTextColor(Color.WHITE);
 
-        PieDataSet dataSet = new PieDataSet(entries, "");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-        PieData pieData = new PieData(dataSet);
-        pieData.setValueTextSize(12f);
-        pieData.setValueTextColor(Color.WHITE);
-
-        pieChart.setData(pieData);
-        pieChart.invalidate();
-
-        adapter.notifyDataSetChanged();
+                    pieChart.setData(pieData);
+                    pieChart.invalidate();
+                    adapter.notifyDataSetChanged();
+                });
     }
+
 }

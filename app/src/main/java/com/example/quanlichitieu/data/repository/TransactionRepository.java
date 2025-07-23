@@ -18,7 +18,7 @@ public class TransactionRepository {
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     public TransactionRepository(Application application) {
-        appDatabase db = appDatabase.getDatabase(application);
+        appDatabase db = appDatabase.getInstance(application);
         transactionDao = db.transactionDao();
     }
 

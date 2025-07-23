@@ -5,7 +5,6 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-
 @Entity(
         tableName = "transactions",
         foreignKeys = {
@@ -22,71 +21,35 @@ import androidx.room.PrimaryKey;
                         onDelete = ForeignKey.SET_NULL
                 )
         }
-y=======
-import com.example.quanlichitieu.data.local.entity.User;
-import com.example.quanlichitieu.data.local.entity.Category;
+)
+public class Transaction {
 
-@Entity(
-        tableName = "transactions"
+    @PrimaryKey(autoGenerate = true)
+    public int id;
 
-    public int category; //        FOOD,SALARY,ENTERTAINMENT,TRANSPORT, INVESTMENT
-    public Type type; // "INCOME" OR "EXPENSE"
-    public long date;
-    public int address;
-    public Type type;
+    public String title;
+
+    public double amount;
+
+    public Type type; // INCOME or EXPENSE
+
     public String date;
+
     public int address;
 
-    public Transaction(String title, double amount, Type type, String date, int address) {
+    @ColumnInfo(index = true)
+    public Integer categoryId;
+
+    @ColumnInfo(index = true)
+    public int userOwnerId;
+
+    public Transaction(String title, double amount, Type type, String date, int address, Integer categoryId, int userOwnerId) {
         this.title = title;
         this.amount = amount;
         this.type = type;
         this.date = date;
         this.address = address;
+        this.categoryId = categoryId;
+        this.userOwnerId = userOwnerId;
     }
-
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public Type getType() {
-        return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-
-
-    }
-
 }
-
