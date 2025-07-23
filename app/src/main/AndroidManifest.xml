@@ -23,7 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.activity.goal.GoalActivity"
-            android:exported="false" />
+            android:exported="true" >
+        </activity>
         <activity
             android:name=".ui.activity.goal.CreateGoalActivity"
             android:exported="true" >
