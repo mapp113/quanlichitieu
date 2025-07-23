@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.quanlichitieu.R;
 import com.example.quanlichitieu.data.local.entity.Category;
 import com.example.quanlichitieu.data.local.entity.Transaction;
+import com.example.quanlichitieu.data.local.entity.Type;
 import com.example.quanlichitieu.ui.adapter.TransactionAdapter;
 import com.example.quanlichitieu.viewmodel.CategoryViewModel;
 import com.example.quanlichitieu.viewmodel.TransactionViewModel;
@@ -36,6 +37,7 @@ public class TransactionRealActivity extends AppCompatActivity {
 
     private RecyclerView recyclerCategory;
     private TextView txtMonthYear, txtTotalExpense, txtTotalIncome, txtNet;
+    private TextView tabExpense, tabIncome;
     private PieChart pieChart;
 
     private List<Transaction> allTransactions = new ArrayList<>();
@@ -63,6 +65,8 @@ public class TransactionRealActivity extends AppCompatActivity {
         txtTotalExpense = findViewById(R.id.txtTotalExpense);
         txtTotalIncome = findViewById(R.id.txtTotalIncome);
         txtNet = findViewById(R.id.txtNet);
+        tabExpense = findViewById(R.id.tabExpense);
+        tabIncome = findViewById(R.id.tabIncome);
         pieChart = findViewById(R.id.pieChart);
         updateMonthYearLabel();
     }
@@ -91,15 +95,22 @@ public class TransactionRealActivity extends AppCompatActivity {
             updateUI();
         });
 
-        findViewById(R.id.tabExpense).setOnClickListener(v -> {
+        tabExpense.setOnClickListener(v -> {
             isExpenseSelected = true;
+            updateTabHighlight();
             updateUI();
         });
 
-        findViewById(R.id.tabIncome).setOnClickListener(v -> {
+        tabIncome.setOnClickListener(v -> {
             isExpenseSelected = false;
+            updateTabHighlight();
             updateUI();
         });
+    }
+
+    private void updateTabHighlight() {
+        tabExpense.setBackgroundResource(isExpenseSelected ? R.drawable.selected_tab_background : R.drawable.unselected_tab_background);
+        tabIncome.setBackgroundResource(!isExpenseSelected ? R.drawable.selected_tab_background : R.drawable.unselected_tab_background);
     }
 
     private void updateMonthYearLabel() {
@@ -132,10 +143,10 @@ public class TransactionRealActivity extends AppCompatActivity {
             if (transactionDate.getYear() == selectedDate.getYear() &&
                     transactionDate.getMonthValue() == selectedDate.getMonthValue()) {
 
-                if (isExpenseSelected && t.amount < 0) {
+                if (isExpenseSelected && t.type == Type.EXPENSE) {
                     filtered.add(t);
                     total += t.amount;
-                } else if (!isExpenseSelected && t.amount > 0) {
+                } else if (!isExpenseSelected && t.type == Type.INCOME) {
                     filtered.add(t);
                     total += t.amount;
                 }
@@ -144,8 +155,9 @@ public class TransactionRealActivity extends AppCompatActivity {
 
         adapter.setItems(filtered);
         updatePieChart(filtered);
-        updateSummary();
+        updateSummary();  // vẫn cập nhật tổng thu/chi để hiển thị ở đầu
     }
+
 
     private void updatePieChart(List<Transaction> transactions) {
         List<PieEntry> entries = new ArrayList<>();
@@ -161,7 +173,7 @@ public class TransactionRealActivity extends AppCompatActivity {
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         dataSet.setValueTextSize(12f);
         pieChart.setData(new PieData(dataSet));
-        pieChart.invalidate(); // refresh chart
+        pieChart.invalidate();
     }
 
     private void updateSummary() {
@@ -176,7 +188,7 @@ public class TransactionRealActivity extends AppCompatActivity {
 
             if (transactionDate.getYear() == selectedDate.getYear()
                     && transactionDate.getMonthValue() == selectedDate.getMonthValue()) {
-                if (t.amount > 0) totalIncome += t.amount;
+                if (t.type == Type.INCOME) totalIncome += t.amount;
                 else totalExpense += t.amount;
             }
         }
