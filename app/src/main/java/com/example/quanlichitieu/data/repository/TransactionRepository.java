@@ -52,11 +52,11 @@ public class TransactionRepository {
     public LiveData<Double> getTotalExpense() {
         return transactionDao.getTotalExpense();
     }
-    public LiveData<List<CategorySummary>> getCategorySummariesByMonth(String type, String month) {
-        return transactionDao.getCategorySummariesByMonth(type, month);
+    public LiveData<List<CategorySummary>> getCategorySummariesByMonth(String type, long monthMillis) {
+        return transactionDao.getCategorySummariesByMonth(type, monthMillis);
     }
 
-    public LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, String day) {
-        return transactionDao.getCategorySummariesByDay(type, day);
+    public LiveData<List<CategorySummary>> getCategorySummariesByDay(String type, long dayMillis) {
+        return transactionDao.getCategorySummariesByDay(type, dayMillis);
     }
 }

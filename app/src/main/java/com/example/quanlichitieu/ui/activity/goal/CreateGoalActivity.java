@@ -1,9 +1,11 @@
 package com.example.quanlichitieu.ui.activity.goal;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -28,6 +30,8 @@ public class CreateGoalActivity extends AppCompatActivity {
     private Button btnCreateGoal;
     private GoalViewModel goalViewModel;
 
+    private ImageButton btnBack;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,15 @@ public class CreateGoalActivity extends AppCompatActivity {
         editCurrentAmount = findViewById(R.id.editCurrentAmount);
         datePickerDeadline = findViewById(R.id.datePickerDeadline);
         btnCreateGoal = findViewById(R.id.btnCreateGoal);
+
+        btnBack = findViewById(R.id.btnBack);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         goalViewModel = new ViewModelProvider(this).get(GoalViewModel.class);
 
