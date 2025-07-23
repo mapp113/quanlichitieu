@@ -37,8 +37,7 @@ public class CategoryRepository {
         Executors.newSingleThreadExecutor().execute(() -> categoryDao.delete(category));
     }
 
-    public Category findById(int id) {
-        // Chạy trên thread riêng nếu không dùng LiveData
-        return categoryDao.findById(id).getValue();
+    public LiveData<String> getCategoryNameById(int id) {
+        return categoryDao.getCategoryNameById(id);
     }
 }
