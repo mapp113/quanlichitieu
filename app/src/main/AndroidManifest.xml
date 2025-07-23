@@ -16,6 +16,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.activity.ShoppingListActivity"
+        android:exported="false" />
+            android:name=".ui.activity.ShoppingListActivity"
+            <activity
             android:exported="false" />
         <activity
             android:name=".ui.activity.TransactionRealActivity"
