@@ -69,11 +69,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.tvAmount.setText((transaction.type != null && transaction.type == Type.INCOME ? "+" : "-") + amountStr);
         holder.tvAmount.setTextColor(transaction.type != null && transaction.type == Type.INCOME ? 0xFF4CAF50 : 0xFFF44336);
         // Format ngày hiển thị
-        String formattedDate = transaction.date;
+        String formattedDate = "";
         try {
-            Date parsed = new SimpleDateFormat("yyyy-MM-dd").parse(transaction.date);
-            formattedDate = new SimpleDateFormat("dd/MM/yyyy").format(parsed);
-        } catch (Exception ignored) {}
+            formattedDate = new java.text.SimpleDateFormat("dd/MM/yyyy").format(new java.util.Date(transaction.date));
+        } catch (Exception e) {
+            formattedDate = "";
+        }
         holder.tvDate.setText("Ngày: "+formattedDate);
         String categoryName = "";
         if (categoryList != null && transaction.categoryId != null) {
