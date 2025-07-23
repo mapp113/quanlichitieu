@@ -23,7 +23,7 @@ import com.example.quanlichitieu.data.local.entity.Converters;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Transaction.class, Category.class, User.class, Goal.class, ShoppingItem.class}, version = 5, exportSchema = false)
+@Database(entities = {Transaction.class, Category.class, User.class, Goal.class, ShoppingItem.class}, version = 6, exportSchema = false)
 
 @TypeConverters(Converters.class)
 public abstract class appDatabase extends RoomDatabase {
@@ -40,7 +40,7 @@ public abstract class appDatabase extends RoomDatabase {
             instance = Room.databaseBuilder(context.getApplicationContext(),
                             appDatabase.class, "app_db")
                     .allowMainThreadQueries()
-                    .addCallback(roomCallback) // ✅ Thêm dòng này
+                    .addCallback(roomCallback)
                     .fallbackToDestructiveMigration()
                     .build();
         }

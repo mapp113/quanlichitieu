@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.fragment)
+    implementation(libs.play.services.maps)
     annotationProcessor(libs.room.compiler)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)

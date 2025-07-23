@@ -15,6 +15,9 @@ import com.example.quanlichitieu.data.local.entity.Transaction;
 import com.example.quanlichitieu.data.local.entity.Type;
 
 import java.util.List;
+import android.location.Address;
+import android.location.Geocoder;
+import java.util.Locale;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder>{
     public interface OnItemClick {
@@ -58,7 +61,25 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.tvAmount.setTextColor(transaction.type != null && transaction.type == Type.INCOME ? 0xFF4CAF50 : 0xFFF44336);
         holder.tvDate.setText(transaction.date);
 //        holder.tvCategory.setText(String.valueOf(transaction.category));
-        holder.tvAddress.setText(String.valueOf(transaction.address));
+        if (transaction.address != null && transaction.address.contains(",")) {
+            String[] parts = transaction.address.split(",");
+            try {
+                double lat = Double.parseDouble(parts[0]);
+                double lng = Double.parseDouble(parts[1]);
+                Geocoder geocoder = new Geocoder(holder.itemView.getContext(), Locale.getDefault());
+                List<Address> addresses = geocoder.getFromLocation(lat, lng, 1);
+                if (addresses != null && !addresses.isEmpty()) {
+                    String addressLine = addresses.get(0).getAddressLine(0);
+                    holder.tvAddress.setText(addressLine);
+                } else {
+                    holder.tvAddress.setText(transaction.address);
+                }
+            } catch (Exception e) {
+                holder.tvAddress.setText(transaction.address);
+            }
+        } else {
+            holder.tvAddress.setText(transaction.address);
+        }
         holder.btnEdit.setOnClickListener(v -> {
             if (onEditClick != null) onEditClick.onEdit(transaction);
         });
