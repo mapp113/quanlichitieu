@@ -11,10 +11,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.quanlichitieu.data.local.dao.CategoryDao;
 import com.example.quanlichitieu.data.local.dao.GoalDAO;
+import com.example.quanlichitieu.data.local.dao.ShoppingItemDao;
 import com.example.quanlichitieu.data.local.dao.TransactionDao;
 import com.example.quanlichitieu.data.local.dao.UserDao;
 import com.example.quanlichitieu.data.local.entity.Category;
 import com.example.quanlichitieu.data.local.entity.Goal;
+import com.example.quanlichitieu.data.local.entity.ShoppingItem;
 import com.example.quanlichitieu.data.local.entity.Transaction;
 import com.example.quanlichitieu.data.local.entity.User;
 import com.example.quanlichitieu.data.local.entity.Converters;
@@ -30,6 +32,7 @@ public abstract class appDatabase extends RoomDatabase {
     public abstract UserDao userDao();
     public abstract TransactionDao transactionDao();
     public abstract GoalDAO goalDAO();
+    public abstract ShoppingItemDao shoppingItemDao();
 
     public static synchronized appDatabase getInstance(Context context) {
 
