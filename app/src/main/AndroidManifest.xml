@@ -15,6 +15,9 @@
             android:name=".ui.activity.AddCategoryActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activity.ShoppingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.TransactionRealActivity"
             android:exported="false" />
         <activity
@@ -48,7 +51,6 @@
         <activity android:name=".ui.activity.CurrencyConverterActivity" />
         <activity android:name=".ui.activity.SettingsActivity" />
         <activity android:name=".ui.activity.ToolsActivity" />
-
     </application>
 
 </manifest>
