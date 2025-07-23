@@ -1,6 +1,7 @@
 package com.example.quanlichitieu.ui.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quanlichitieu.R;
 import com.example.quanlichitieu.data.local.entity.Goal;
+import com.example.quanlichitieu.ui.activity.goal.EditGoalActivity;
 
+
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -43,11 +47,14 @@ public class GoalAdapter extends RecyclerView.Adapter<GoalAdapter.GoalViewHolder
         String deadlineFormatted = sdf.format(new Date(goal.deadline));
         holder.deadline.setText("Hạn: " + deadlineFormatted);
 
-        holder.current.setText(goal.currentAmount + " đ");
-        holder.target.setText(goal.targetAmount + " đ");
+        DecimalFormat format = new DecimalFormat("#,###");
+        holder.current.setText(format.format(goal.currentAmount) + " đ");
+        holder.target.setText(format.format(goal.targetAmount) + " đ");
 
         holder.btnEdit.setOnClickListener(v -> {
-            // Xử lý chuyển sang activity chỉnh sửa
+            Intent intent = new Intent(context, EditGoalActivity.class);
+            intent.putExtra("goalId", goal.getGoalId());
+            context.startActivity(intent);
         });
 
     }

@@ -35,6 +35,6 @@ public class GoalRepository {
     }
 
     public void delete(Goal goal) {
-        goalDao.update(goal);
+        goalDao.delete(goal);
     }
 }

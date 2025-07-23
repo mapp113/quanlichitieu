@@ -73,6 +73,11 @@ public class CreateGoalActivity extends AppCompatActivity {
                 calendar.set(datePickerDeadline.getYear(), datePickerDeadline.getMonth(), datePickerDeadline.getDayOfMonth());
                 long deadline = calendar.getTimeInMillis();
 
+                if (deadline < System.currentTimeMillis()) {
+                    Toast.makeText(this, "Không được chọn ngày trong quá khứ!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 int userId = 1;
                 Goal goal = new Goal(title, targetMoney, currentMoney, deadline, userId);
 
