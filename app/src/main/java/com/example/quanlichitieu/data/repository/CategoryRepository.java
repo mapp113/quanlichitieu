@@ -40,4 +40,8 @@ public class CategoryRepository {
     public LiveData<String> getCategoryNameById(int id) {
         return categoryDao.getCategoryNameById(id);
     }
+
+    public long insertAndReturnId(Category category) {
+        return categoryDao.insert(category);
+    }
 }
