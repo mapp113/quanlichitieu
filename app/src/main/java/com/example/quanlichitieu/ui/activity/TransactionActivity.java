@@ -60,7 +60,7 @@ public class TransactionActivity extends AppCompatActivity {
         tvTotalExpense = findViewById(R.id.tvTotalExpense);
         Button swap = findViewById(R.id.buttonSwap);
         swap.setOnClickListener(view -> {
-            startActivity(new Intent(this,TransactionRealActivity.class));
+            startActivity(new Intent(this, AddEditActivity.class));
         });
         tvBalance = findViewById(R.id.tvBalance);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
@@ -81,7 +81,7 @@ public class TransactionActivity extends AppCompatActivity {
         });
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddEditActivity.class);
+            Intent intent = new Intent(this, AddCategoryActivity.class);
             startActivityForResult(intent, 100);
         });
     }
