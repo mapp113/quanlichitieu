@@ -1,9 +1,13 @@
 package com.example.quanlichitieu.ui.activity;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,13 +42,14 @@ public class TransactionRealActivity extends AppCompatActivity {
     private RecyclerView recyclerCategory;
     private TextView txtMonthYear, txtTotalExpense, txtTotalIncome, txtNet;
     private TextView tabExpense, tabIncome;
+    Button dayTab,monthTab;
     private PieChart pieChart;
-
     private List<Transaction> allTransactions = new ArrayList<>();
     private List<Category> allCategories = new ArrayList<>();
     private TransactionAdapter adapter;
 
     private boolean isExpenseSelected = true;
+    private boolean isDay = true;
     private LocalDate selectedDate = LocalDate.now();
 
     @Override
@@ -68,6 +73,8 @@ public class TransactionRealActivity extends AppCompatActivity {
         tabExpense = findViewById(R.id.tabExpense);
         tabIncome = findViewById(R.id.tabIncome);
         pieChart = findViewById(R.id.pieChart);
+        dayTab=findViewById(R.id.Daytab);
+        monthTab=findViewById(R.id.MonthTab);
         updateMonthYearLabel();
     }
 
@@ -84,13 +91,13 @@ public class TransactionRealActivity extends AppCompatActivity {
 
     private void setupListeners() {
         findViewById(R.id.btnPrevMonth).setOnClickListener(v -> {
-            selectedDate = selectedDate.minusMonths(1);
+            selectedDate = isDay ? selectedDate.minusDays(1) : selectedDate.minusMonths(1);
             updateMonthYearLabel();
             updateUI();
         });
 
         findViewById(R.id.btnNextMonth).setOnClickListener(v -> {
-            selectedDate = selectedDate.plusMonths(1);
+            selectedDate = isDay ? selectedDate.plusDays(1) : selectedDate.plusMonths(1);
             updateMonthYearLabel();
             updateUI();
         });
@@ -106,16 +113,41 @@ public class TransactionRealActivity extends AppCompatActivity {
             updateTabHighlight();
             updateUI();
         });
+        dayTab.setOnClickListener(view -> {
+            isDay=true;
+            updateTabDay();
+            updateMonthYearLabel();
+            updateUI();
+            Toast.makeText(this,isDay+" is",Toast.LENGTH_SHORT).show();
+        });
+        monthTab.setOnClickListener(view -> {
+            isDay=false;
+            updateTabDay();
+            updateMonthYearLabel();
+            updateUI();
+            Toast.makeText(this,isDay+" is",Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void updateTabHighlight() {
         tabExpense.setBackgroundResource(isExpenseSelected ? R.drawable.selected_tab_background : R.drawable.unselected_tab_background);
         tabIncome.setBackgroundResource(!isExpenseSelected ? R.drawable.selected_tab_background : R.drawable.unselected_tab_background);
     }
+    private void updateTabDay() {
+        int orangeColor = ContextCompat.getColor(this, R.color.orange);
+        int purpleColor = ContextCompat.getColor(this, R.color.purple);
+        dayTab.setBackgroundColor(isDay ? orangeColor : purpleColor);
+        monthTab.setBackgroundColor(!isDay ? orangeColor : purpleColor);
+    }
 
     private void updateMonthYearLabel() {
-        txtMonthYear.setText(selectedDate.format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        if (isDay) {
+            txtMonthYear.setText(selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        } else {
+            txtMonthYear.setText(selectedDate.format(DateTimeFormatter.ofPattern("MM/yyyy")));
+        }
     }
+
 
     private void observeData() {
         categoryViewModel.getAllCategories().observe(this, categories -> {
@@ -139,10 +171,12 @@ public class TransactionRealActivity extends AppCompatActivity {
             LocalDate transactionDate = Instant.ofEpochMilli(t.date)
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
+            boolean sameMonth = transactionDate.getYear() == selectedDate.getYear()
+                    && transactionDate.getMonthValue() == selectedDate.getMonthValue();
 
-            if (transactionDate.getYear() == selectedDate.getYear() &&
-                    transactionDate.getMonthValue() == selectedDate.getMonthValue()) {
+            boolean sameDay = transactionDate.equals(selectedDate);
 
+            if ((isDay && sameDay) || (!isDay && sameMonth)) {
                 if (isExpenseSelected && t.type == Type.EXPENSE) {
                     filtered.add(t);
                     total += t.amount;
@@ -186,18 +220,24 @@ public class TransactionRealActivity extends AppCompatActivity {
                     .atZone(ZoneId.systemDefault())
                     .toLocalDate();
 
-            if (transactionDate.getYear() == selectedDate.getYear()
-                    && transactionDate.getMonthValue() == selectedDate.getMonthValue()) {
+            boolean match = isDay
+                    ? transactionDate.equals(selectedDate)
+                    : transactionDate.getYear() == selectedDate.getYear()
+                    && transactionDate.getMonthValue() == selectedDate.getMonthValue();
+
+            if (match) {
                 if (t.type == Type.INCOME) totalIncome += t.amount;
-                else totalExpense += t.amount;
+                else if (t.type == Type.EXPENSE) totalExpense += t.amount;
             }
         }
 
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
         txtTotalIncome.setText("+" + formatter.format(totalIncome) + "đ");
-        txtTotalExpense.setText(formatter.format(totalExpense) + "đ");
-        txtNet.setText(formatter.format(totalIncome + totalExpense) + "đ");
+        txtTotalExpense.setText("-" + formatter.format(totalExpense) + "đ");
+        double net = totalIncome - totalExpense;
+        txtNet.setText((net >= 0 ? "+" : "") + formatter.format(net) + "đ");
     }
+
 
     private Category findCategoryById(int categoryId) {
         for (Category c : allCategories) {
