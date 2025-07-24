@@ -33,7 +33,7 @@
             android:padding="10dp"/>
 
         <EditText android:id="@+id/etDate"
-            android:hint="Ngày (YYYY-MM-DD)"
+            android:hint="Ngày (DD-MM-YYYY)"
             android:layout_marginBottom="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

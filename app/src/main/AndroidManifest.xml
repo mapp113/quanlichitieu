@@ -40,7 +40,7 @@
         </activity>
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCKQS57tprSt7-rgKOQ1BI6pbXsyGtiiCU" />
+            android:value="AIzaSyCOdbfbLDNyalHQXBYGjl5GJstQgI2bnxg" />
         <activity
             android:name=".ui.activity.goal.CreateGoalActivity"
             android:exported="true" />

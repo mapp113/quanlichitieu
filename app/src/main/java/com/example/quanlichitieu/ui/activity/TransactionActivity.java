@@ -41,6 +41,8 @@ public class TransactionActivity extends AppCompatActivity {
     private List<Category> categoryList = new ArrayList<>();
     private CategoryViewModel categoryViewModel;
     private TextView tvTotalIncome, tvTotalExpense, tvBalance;
+    private double incomeValue = 0;
+    private double expenseValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,23 +69,27 @@ public class TransactionActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         transactionViewModel = new ViewModelProvider(this).get(TransactionViewModel.class);
         categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        // Khởi tạo adapter 1 lần
+        adapter = new TransactionAdapter(transactionList, categoryList,
+            transaction -> {},
+            transaction -> {},
+            this::onEditTransaction,
+            this::onDeleteTransaction
+        );
+        recyclerView.setAdapter(adapter);
+        // Observe category chỉ update list, không tạo lại adapter
         categoryViewModel.getAllCategories().observe(this, categories -> {
             categoryList = categories != null ? categories : new ArrayList<>();
-            // Khởi tạo adapter khi đã có categoryList
-            adapter = new TransactionAdapter(transactionList, categoryList,
-                transaction -> {},
-                transaction -> {},
-                this::onEditTransaction,
-                this::onDeleteTransaction
-            );
-            recyclerView.setAdapter(adapter);
-            observeData();
+            adapter.setCategoryList(categoryList); // Thêm hàm này vào adapter nếu chưa có
+            adapter.notifyDataSetChanged();
         });
         FloatingActionButton fabAdd = findViewById(R.id.fabAdd);
         fabAdd.setOnClickListener(v -> {
             Intent intent = new Intent(this, AddCategoryActivity.class);
             startActivityForResult(intent, 100);
         });
+        // Chỉ gọi observeData 1 lần
+        observeData();
     }
 
     private void observeData() {
@@ -92,25 +98,24 @@ public class TransactionActivity extends AppCompatActivity {
             if (adapter != null) adapter.setItems(transactionList);
         });
         transactionViewModel.getTotalIncome().observe(this, income -> {
+            incomeValue = income != null ? income : 0;
             NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-            String incomeStr = formatter.format(income != null ? income : 0) + "đ";
+            String incomeStr = formatter.format(incomeValue) + "đ";
             tvTotalIncome.setText("Tổng thu: " + incomeStr);
             updateBalance();
         });
         transactionViewModel.getTotalExpense().observe(this, expense -> {
+            expenseValue = expense != null ? expense : 0;
             NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-            String expenseStr = formatter.format(expense != null ? expense : 0) + "đ";
+            String expenseStr = formatter.format(expenseValue) + "đ";
             tvTotalExpense.setText("Tổng chi: " + expenseStr);
             updateBalance();
         });
     }
 
     private void updateBalance() {
-        double income = 0, expense = 0;
-        try { income = Double.parseDouble(tvTotalIncome.getText().toString().replaceAll("[^0-9.-]", "")); } catch (Exception ignored) {}
-        try { expense = Double.parseDouble(tvTotalExpense.getText().toString().replaceAll("[^0-9.-]", "")); } catch (Exception ignored) {}
         NumberFormat formatter = NumberFormat.getInstance(new Locale("vi", "VN"));
-        String balanceStr = formatter.format(income - expense) + "đ";
+        String balanceStr = formatter.format(incomeValue - expenseValue) + "đ";
         tvBalance.setText("Số dư: " + balanceStr);
     }
 

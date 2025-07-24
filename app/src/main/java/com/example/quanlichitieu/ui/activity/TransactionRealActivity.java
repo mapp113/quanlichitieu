@@ -31,8 +31,10 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class TransactionRealActivity extends AppCompatActivity {
 
@@ -194,13 +196,25 @@ public class TransactionRealActivity extends AppCompatActivity {
 
 
     private void updatePieChart(List<Transaction> transactions) {
-        List<PieEntry> entries = new ArrayList<>();
+        Map<String, Float> categoryAmountMap = new HashMap<>();
 
         for (Transaction t : transactions) {
             Category category = findCategoryById(t.categoryId);
             if (category != null) {
-                entries.add(new PieEntry((float) Math.abs(t.amount), category.getName()));
+                String categoryName = category.getName();
+                float amount = (float) Math.abs(t.amount);
+                // Cộng dồn nếu category đã tồn tại
+                if (categoryAmountMap.containsKey(categoryName)) {
+                    categoryAmountMap.put(categoryName, categoryAmountMap.get(categoryName) + amount);
+                } else {
+                    categoryAmountMap.put(categoryName, amount);
+                }
             }
+        }
+
+        List<PieEntry> entries = new ArrayList<>();
+        for (Map.Entry<String, Float> entry : categoryAmountMap.entrySet()) {
+            entries.add(new PieEntry(entry.getValue(), entry.getKey()));
         }
 
         PieDataSet dataSet = new PieDataSet(entries, "");
@@ -209,6 +223,7 @@ public class TransactionRealActivity extends AppCompatActivity {
         pieChart.setData(new PieData(dataSet));
         pieChart.invalidate();
     }
+
 
     private void updateSummary() {
         double totalIncome = 0, totalExpense = 0;

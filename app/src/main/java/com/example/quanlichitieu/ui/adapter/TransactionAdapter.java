@@ -130,6 +130,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         notifyDataSetChanged();
     }
 
+    public void setCategoryList(List<Category> newCategoryList) {
+        this.categoryList = newCategoryList;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvTitle, tvAmount, tvDate, tvCategory, tvAddress;
         ImageButton btnEdit, btnDelete;

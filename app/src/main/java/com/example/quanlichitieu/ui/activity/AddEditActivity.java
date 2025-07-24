@@ -155,7 +155,7 @@ public class AddEditActivity extends AppCompatActivity {
         }
         double amount = Double.parseDouble(amountStr);
         String address = etAddress.getText().toString().trim();
-        int userOwnerId = 1; // TODO: Lấy userId thực tế từ session/login
+        int userOwnerId = 1;
         Type type = rbIncome.isChecked() ? Type.INCOME : Type.EXPENSE;
         saveTransactionWithCategoryId(desc, amount, type, dateMillis, address, selectedCategoryId, userOwnerId);
     }
