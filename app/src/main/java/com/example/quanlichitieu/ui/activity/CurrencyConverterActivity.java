@@ -8,7 +8,11 @@ import android.text.Editable;
 import android.text.TextWatcher;
 
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.example.quanlichitieu.R;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -28,7 +32,16 @@ public class CurrencyConverterActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
         setContentView(R.layout.currency_exchange_tool); // đổi thành tên file XML thật, ví dụ: activity_main
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         // Khởi tạo view
         amountInput1 = findViewById(R.id.amount_input1);
@@ -36,7 +49,6 @@ public class CurrencyConverterActivity extends AppCompatActivity{
         currencyPicker1 = findViewById(R.id.currency_picker1);
         currencyPicker2 = findViewById(R.id.currency_picker2);
         swapButton = findViewById(R.id.swap_icon);
-        MaterialToolbar toolbar = findViewById(R.id.toolbar);
 
         // Gắn dropdown cho mỗi TextView
         setupCurrencyPicker(currencyPicker1);

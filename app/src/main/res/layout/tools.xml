@@ -107,5 +107,32 @@
                 android:textColor="?attr/colorOnSurface"
                 android:textSize="18sp" />
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:orientation="horizontal"
+            android:padding="18dp">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="icon nhắc nhở"
+                android:src="@drawable/timer_24px"
+                app:tint="?attr/colorOnSurfaceVariant" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Nhắc nhở"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="18sp" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

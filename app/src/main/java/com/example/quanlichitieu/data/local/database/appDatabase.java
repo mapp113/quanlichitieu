@@ -11,19 +11,21 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.example.quanlichitieu.data.local.dao.CategoryDao;
 import com.example.quanlichitieu.data.local.dao.GoalDAO;
+import com.example.quanlichitieu.data.local.dao.ReminderDao;
 import com.example.quanlichitieu.data.local.dao.ShoppingItemDao;
 import com.example.quanlichitieu.data.local.dao.TransactionDao;
 import com.example.quanlichitieu.data.local.dao.UserDao;
 import com.example.quanlichitieu.data.local.entity.Category;
 import com.example.quanlichitieu.data.local.entity.Goal;
 import com.example.quanlichitieu.data.local.entity.ShoppingItem;
+import com.example.quanlichitieu.data.local.entity.TaskReminder;
 import com.example.quanlichitieu.data.local.entity.Transaction;
 import com.example.quanlichitieu.data.local.entity.User;
 import com.example.quanlichitieu.data.local.entity.Converters;
 
 import java.util.concurrent.Executors;
 
-@Database(entities = {Transaction.class, Category.class, User.class, Goal.class, ShoppingItem.class}, version = 6, exportSchema = false)
+@Database(entities = {Transaction.class, Category.class, User.class, Goal.class, ShoppingItem.class, TaskReminder.class}, version = 5, exportSchema = false)
 
 @TypeConverters(Converters.class)
 public abstract class appDatabase extends RoomDatabase {
@@ -33,6 +35,8 @@ public abstract class appDatabase extends RoomDatabase {
     public abstract TransactionDao transactionDao();
     public abstract GoalDAO goalDAO();
     public abstract ShoppingItemDao shoppingItemDao();
+
+    public abstract ReminderDao reminderDao();
 
     public static synchronized appDatabase getInstance(Context context) {
 

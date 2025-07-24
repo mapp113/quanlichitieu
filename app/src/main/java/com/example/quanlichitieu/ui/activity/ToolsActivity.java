@@ -47,6 +47,13 @@ public class ToolsActivity  extends AppCompatActivity {
             startActivity(intent);
         });
 
+        LinearLayout reminderLayout = findViewById(R.id.reminder);
+        reminderLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ReminderActivity.class);
+            startActivity(intent);
+        });
+
+
         // Chuyển sang màn hình máy tính
 //        tvCalculator.setOnClickListener(v -> {
 //            Intent intent = new Intent(ToolsActivity.this, CalculatorActivity.class);

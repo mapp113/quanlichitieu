@@ -3,4 +3,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="choose_location">Chọn vị trí trên bản đồ</string>
+    <string-array name="repeat_options">
+        <item>Một lần</item>
+        <item>Mỗi ngày</item>
+        <item>Mỗi tuần</item>
+        <item>Mỗi tháng</item>
+    </string-array>
+
 </resources>
